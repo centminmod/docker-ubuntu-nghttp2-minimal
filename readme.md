@@ -4,6 +4,86 @@
 
 A [minimalistic nghttp2 docker image](https://hub.docker.com/r/centminmod/docker-ubuntu-nghttp2-minimal) using Ubuntu 19.0.4 native [nghttp2](https://github.com/nghttp2/nghttp2) and testssl.sh apt packages for much smaller docker image size instead of source compiled nghttp2 version in [docker-ubuntu-nghttp2](https://www.github.com/centminmod/docker-ubuntu-nghttp2) docker image (which includes other tools). This minimalistic nghttp2 docker image currently installs nghttp 1.36 while the source compiled nghttp2 docker image source compiles latest nghttp2 version - 1.38.
 
+# additional command line tools
+
+* testssl latest version
+* cipherscan
+* curltest - can check a HTTP compressed requests uncompressed versus compressed size for both gzip & brotli HTTP compressed assets.
+
+## testssl latest version
+
+Using below mentioned [command alias](#command-alias-shortcuts) for `nghttpcmd-min` with running docker nghttp2 minimal image.
+
+```
+nghttpcmd-min testssl https://centminmod.com
+```
+
+## cipherscan
+
+Using below mentioned [command alias](#command-alias-shortcuts) for `nghttpcmd-min` with running docker nghttp2 minimal image.
+
+```
+nghttpcmd-min cipherscan https://centminmod.com
+.......................................................
+Target: centminmod.com:443
+
+prio  ciphersuite                        protocols  pubkey_size  signature_algoritm       trusted  ticket_hint  ocsp_staple  npn          pfs                 curves                                    curves_ordering
+1     ECDHE-ECDSA-CHACHA20-POLY1305-OLD  TLSv1.2    256          ecdsa-with-SHA256        True     64800        True         h2,http/1.1  ECDH,P-256,256bits  prime256v1                                server
+2     ECDHE-ECDSA-AES128-GCM-SHA256      TLSv1.2    256          ecdsa-with-SHA256        True     64800        True         h2,http/1.1  ECDH,P-256,256bits  prime256v1                                server
+3     ECDHE-ECDSA-AES128-SHA             TLSv1.2    256          ecdsa-with-SHA256        True     64800        True         h2,http/1.1  ECDH,P-256,256bits  server
+4     ECDHE-ECDSA-AES128-SHA256          TLSv1.2    256          ecdsa-with-SHA256        True     64800        True         h2,http/1.1  ECDH,P-256,256bits  prime256v1                                server
+5     ECDHE-ECDSA-AES256-GCM-SHA384      TLSv1.2    256          ecdsa-with-SHA256        True     64800        True         h2,http/1.1  ECDH,P-256,256bits  prime256v1                                server
+6     ECDHE-ECDSA-AES256-SHA             TLSv1.2    256          ecdsa-with-SHA256        True     64800        True         h2,http/1.1  ECDH,P-256,256bits  server
+7     ECDHE-ECDSA-AES256-SHA384          TLSv1.2    256          ecdsa-with-SHA256        True     64800        True         h2,http/1.1  ECDH,P-256,256bits  prime256v1                                server
+8     ECDHE-RSA-CHACHA20-POLY1305-OLD    TLSv1.2    2048         sha256WithRSAEncryption  True     64800        True         h2,http/1.1  ECDH,P-256,256bits  prime256v1,secp384r1,secp224r1,secp521r1  server
+9     ECDHE-RSA-AES128-GCM-SHA256        TLSv1.2    2048         sha256WithRSAEncryption  True     64800        True         h2,http/1.1  ECDH,P-256,256bits  prime256v1,secp384r1,secp224r1,secp521r1  server
+10    ECDHE-RSA-AES128-SHA               TLSv1.2    2048         sha256WithRSAEncryption  True     64800        True         h2,http/1.1  ECDH,P-256,256bits  prime256v1,secp384r1,secp224r1,secp521r1  server
+11    ECDHE-RSA-AES128-SHA256            TLSv1.2    2048         sha256WithRSAEncryption  True     64800        True         h2,http/1.1  ECDH,P-256,256bits  prime256v1,secp384r1,secp224r1,secp521r1  server
+12    AES128-GCM-SHA256                  TLSv1.2    2048         sha256WithRSAEncryption  True     64800        True         h2,http/1.1  None                None                                      server
+13    AES128-SHA                         TLSv1.2    2048         sha256WithRSAEncryption  True     64800        True         h2,http/1.1  None                None                                      server
+14    AES128-SHA256                      TLSv1.2    2048         sha256WithRSAEncryption  True     64800        True         h2,http/1.1  None                None                                      server
+15    ECDHE-RSA-AES256-GCM-SHA384        TLSv1.2    2048         sha256WithRSAEncryption  True     64800        True         h2,http/1.1  ECDH,P-256,256bits  prime256v1,secp384r1,secp224r1,secp521r1  server
+16    ECDHE-RSA-AES256-SHA               TLSv1.2    2048         sha256WithRSAEncryption  True     64800        True         h2,http/1.1  ECDH,P-256,256bits  prime256v1,secp384r1,secp224r1,secp521r1  server
+17    ECDHE-RSA-AES256-SHA384            TLSv1.2    2048         sha256WithRSAEncryption  True     64800        True         h2,http/1.1  ECDH,P-256,256bits  prime256v1,secp384r1,secp224r1,secp521r1  server
+18    AES256-GCM-SHA384                  TLSv1.2    2048         sha256WithRSAEncryption  True     64800        True         h2,http/1.1  None                None                                      server
+19    AES256-SHA                         TLSv1.2    2048         sha256WithRSAEncryption  True     64799        True         h2,http/1.1  None                None                                      server
+20    AES256-SHA256                      TLSv1.2    2048         sha256WithRSAEncryption  True     64800        True         h2,http/1.1  None                None                                      server
+
+OCSP stapling: supported
+Cipher ordering: server
+Curves ordering: server - fallback: no
+Server supports secure renegotiation
+Server supported compression methods: NONE
+TLS Tolerance: yes
+
+Intolerance to:
+ SSL 3.254           : absent
+ TLS 1.0             : PRESENT
+ TLS 1.1             : PRESENT
+ TLS 1.2             : absent
+ TLS 1.3             : absent
+ TLS 1.4             : absent
+ ```
+
+## curltest 
+
+Can check a HTTP compressed requests uncompressed versus compressed size for both gzip & brotli HTTP compressed assets.
+
+Using below mentioned [command alias](#command-alias-shortcuts) for `nghttpcmd-min` with running docker nghttp2 minimal image.
+
+```
+nghttpcmd-min curltest gzip https://centminmod.com
+URI: https://centminmod.com (gzip)
+Uncompressed size : 43.13 KiB
+Compressed size   : 10.72 KiB
+```
+```
+nghttpcmd-min curltest br https://centminmod.com    
+URI: https://centminmod.com (br)
+Uncompressed size : 43.13 KiB
+Compressed size   : 10.15 KiB
+```
+
 # command alias shortcuts
 
 You can add some command alias shortcuts to `/root/.bashrc` for convenience sake.
